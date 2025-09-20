@@ -1,0 +1,82 @@
+[gd_scene load_steps=7 format=3 uid="uid://drvd75mnasafh"]
+
+[ext_resource type="Script" uid="uid://6vlvo1u8hbyj" path="res://vehicle_body_3d.gd" id="1_l10qf"]
+[ext_resource type="PackedScene" uid="uid://cs3c6ssh06kp" path="res://carmesh.tscn" id="2_fapjt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l10qf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kot2"]
+size = Vector3(2, 1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l10qf"]
+size = Vector3(2, 1, 4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l10qf"]
+height = 0.5
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CarParent" type="Node3D" parent="."]
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="CarParent"]
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_l10qf")
+script = ExtResource("1_l10qf")
+
+[node name="CarBodyCollision" type="CollisionShape3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_6kot2")
+debug_color = Color(5.39064e-06, 0.597765, 0.712693, 0.42)
+
+[node name="carmesh" type="MeshInstance3D" parent="CarParent/VehicleBody3D/CarBodyCollision"]
+visible = false
+mesh = SubResource("BoxMesh_l10qf")
+
+[node name="Node3D" parent="CarParent/VehicleBody3D/CarBodyCollision" instance=ExtResource("2_fapjt")]
+
+[node name="CarCamera" type="Camera3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(-1, 3.99794e-17, -8.74228e-08, -1.93029e-08, 0.975319, 0.2208, 8.52651e-08, 0.2208, -0.975319, 0, 2, -5)
+
+[node name="FrontLeftWheel" type="VehicleWheel3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+use_as_steering = true
+wheel_friction_slip = 0.8
+suspension_stiffness = 50.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarParent/VehicleBody3D/FrontLeftWheel"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_l10qf")
+
+[node name="FrontRightWheel" type="VehicleWheel3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+use_as_steering = true
+wheel_friction_slip = 0.8
+suspension_stiffness = 50.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarParent/VehicleBody3D/FrontRightWheel"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_l10qf")
+
+[node name="BackRightWheel" type="VehicleWheel3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+use_as_traction = true
+wheel_friction_slip = 0.8
+suspension_stiffness = 50.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarParent/VehicleBody3D/BackRightWheel"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_l10qf")
+
+[node name="BackLeftWheel" type="VehicleWheel3D" parent="CarParent/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+use_as_traction = true
+wheel_friction_slip = 0.8
+suspension_stiffness = 50.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarParent/VehicleBody3D/BackLeftWheel"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_l10qf")
